@@ -15,12 +15,12 @@ export const EditorTabs = [
     icon: color3d,
   },
   {
-    name: "aipicker",
-    icon: bot3d,
-  },
-  {
     name: "filepicker",
     icon: file3d,
+  },
+  {
+    name: "aipicker",
+    icon: bot3d,
   },
 ];
 
