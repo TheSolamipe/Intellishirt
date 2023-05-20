@@ -8,6 +8,7 @@ import color3d from "./colorpicker.png";
 
 import logoShirt from "./logo-tshirt.png";
 import stylishShirt from "./stylish-tshirt.png";
+// import download from "./save.png";
 
 export {
   ai,

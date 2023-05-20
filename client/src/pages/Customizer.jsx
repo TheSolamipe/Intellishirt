@@ -6,7 +6,7 @@ import config from '../config/config';
 import state from '../store';
 import { download, logoShirt } from '../assets';
 import { downloadCanvasToImage , reader } from '../config/helpers';
-import { EditorTabs, FilterTabs, DecalTypes} from '../config/constants';
+import { EditorTabs, FilterTabs, DecalTypes, DownldTabs} from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, FilePicker,CustomButton, Tab } from '../components';
 
@@ -50,11 +50,25 @@ const Customizer = () => {
         if(!prompt) return alert("Please enter a prompt");
 
         try{
-            //call backend to generate an ai Image
+            // call backend to generate an ai image
+            setGeneratingImg(true);
 
+            const response = await fetch('http://localhost:8080/api/v1/dalle', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt,
+                })
+            })
+
+            const data = await response.json();
+
+            handleDecals(type, `data:image/png;base64,${data.photo}`)
         }catch(error){
             alert(error)
-        } finally{
+        }finally{
             setGeneratingImg(false);
             setActiveEditorTab("");
         }
@@ -81,6 +95,7 @@ const Customizer = () => {
             default:
                 state.isLogoTexture = true;
                 state.isFullTexture = false;
+                break;
         }
 
         //after setting the state , activefilterTab is updated
@@ -134,6 +149,13 @@ const Customizer = () => {
                     {FilterTabs.map((tab) => (
                                 <Tab key={tab.name} tab={tab} isFilterTab isActiveTab={activeFilterTab[tab.name]} handleClick={() => handleActiveFilterTab(tab.name)}/>
                             ))}
+                    {DownldTabs.map((tab)=> (
+                        <Tab 
+                            key={tab.name}
+                            tab={tab}
+                            handleClick={downloadCanvasToImage}
+                        />
+                    ))}
                 </motion.div>
             </>
         )}

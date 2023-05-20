@@ -7,6 +7,7 @@ import {
   bot3d,
   color3d,
   file3d,
+  download,
 } from "../assets";
 
 export const EditorTabs = [
@@ -32,6 +33,13 @@ export const FilterTabs = [
   {
     name: "stylishShirt",
     icon: stylishShirt,
+  },
+];
+
+export const DownldTabs = [
+  {
+    name: "imgDownload",
+    icon: download,
   },
 ];
 
